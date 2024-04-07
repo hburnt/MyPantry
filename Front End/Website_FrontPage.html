@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recipe App</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f8f8;
+  }
+  .search {
+    display: flex;
+    align-items: center;
+  }
+  .search-icon {
+    margin-right: 5px;
+  }
+  .cook-now {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  .cook-now img {
+    margin-right: 5px;
+  }
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: #ddd;
+    padding: 10px 0;
+  }
+  .tab {
+    color: #333;
+    text-decoration: none;
+    padding: 5px 10px;
+  }
+  .recipes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 10px;
+  }
+  .recipe {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .recipe img {
+    width: 100%;
+    height: auto;
+  }
+  .recipe-info {
+    padding: 5px;
+    background-color: #f8f8f8;
+  }
+  .recipe-title {
+    margin: 0;
+    color: #333;
+  }
+  .recipe-time {
+    margin: 0;
+    font-size: 0.8em;
+    color: #686868;
+  }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="search">
+    <img class="search-icon" src="search-icon.png" alt="Search">
+    <span>Search recipes</span>
+  </div>
+  <a href="#" class="cook-now">
+    <img src="cart-icon.png" alt="Cart">
+    COOK NOW
+  </a>
+</div>
+<div class="tabs">
+  <a href="#" class="tab">Pantry</a>
+  <a href="#" class="tab">Recipes</a>
+  <a href="#" class="tab">Shopping List</a>
+  <a href="#" class="tab">Cook Now</a>
+</div>
+<div class="recipes">
+  <!-- Repeat this block for each recipe -->
+  <div class="recipe">
+    <img src="recipe-image.jpg" alt="Recipe Image">
+    <div class="recipe-info">
+      <h3 class="recipe-title">Recipe Title</h3>
+      <p class="recipe-time">45 min</p>
+    </div>
+  </div>
+  <!-- ... -->
+</div>
+</body>
+</html>
