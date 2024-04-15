@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>myPantry - Recipes</title>
+<link rel="stylesheet" href="style.css">
+<script src="logoutScript.js"></script> 
+</head>
+<body>
+  <nav>
+    <div class="logo">myPantry</div>
+    <div class="top-bar">
+      <span class="welcome-text">Welcome, [Username]</span> 
+      <!-- Modified sign-out button -->
+      <a href="landingPage.html" onclick="signOut()" class="small-button">Sign Out</a> 
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </nav>
+  <div class="spacer"></div> <!-- Add a spacer div -->
+  <div class="button-row">
+    <button onclick="redirectToPage('pantryPage.html')">Pantry</button>
+    <button onclick="redirectToPage('recipePage.html')">Recipe</button>
+    <button onclick="redirectToPage('shoppingListPage.html')">Shopping List</button>
+    <button onclick="redirectToPage('cookNowPage.html')">Cook Now</button>
+  </div>
+
+  <!-- Recipe items -->
+  <div class="recipe-container">
+    <h2>Recipes</h2>
+    
+    <!-- Category: Dinner -->
+    <h3>Dinner</h3>
+    <div class="card-list" id="dinnerRecipes">
+      <!-- Cards for dinner recipes will be dynamically generated here -->
+    </div>
+
+    <!-- Category: Lunch -->
+    <h3>Lunch</h3>
+    <div class="card-list" id="lunchRecipes">
+      <!-- Cards for lunch recipes will be dynamically generated here -->
+    </div>
+
+    <h3>Breakfast</h3>
+    <div class="card-list" id="breakfastRecipes">
+      <!-- Cards for breakfast recipes will be dynamically generated here -->
+    </div>
+
+    <h3>Quick</h3>
+    <div class="card-list" id="quickRecipes">
+      <!-- Cards for quick recipes will be dynamically generated here -->
+    </div>
+  </div>
+
+  <script src="sliderScript.js"></script>
+  <script>
+    // Sample recipe data categorized
+    const recipeData = {
+        dinner: [
+            { name: "Spaghetti Carbonara", ingredients: ["Pasta", "Bacon", "Eggs", "Parmesan Cheese", "Garlic"], nutrients: { calories: 450, protein: 20, fat: 25, carbs: 35 } },
+            { name: "Grilled Salmon with Asparagus", ingredients: ["Salmon Fillet", "Asparagus", "Lemon", "Olive Oil", "Salt", "Pepper"], nutrients: { calories: 380, protein: 30, fat: 20, carbs: 15 } }
+        ],
+        lunch: [
+            { name: "Caprese Salad", ingredients: ["Tomatoes", "Mozzarella Cheese", "Basil Leaves", "Balsamic Vinegar", "Salt", "Pepper"], nutrients: { calories: 250, protein: 15, fat: 20, carbs: 10 } },
+            { name: "Chicken Caesar Salad", ingredients: ["Chicken Breast", "Romaine Lettuce", "Parmesan Cheese", "Caesar Dressing", "Croutons"], nutrients: { calories: 320, protein: 25, fat: 15, carbs: 20 } }
+        ],
+        breakfast: [
+            { name: "Avocado Toast", ingredients: ["Bread", "Avocado", "Egg", "Salt", "Pepper", "Chili Flakes"], nutrients: { calories: 300, protein: 10, fat: 15, carbs: 25 } },
+            { name: "Oatmeal with Berries", ingredients: ["Oats", "Milk", "Berries", "Honey", "Cinnamon"], nutrients: { calories: 280, protein: 8, fat: 5, carbs: 45 } }
+        ],
+        quick: [
+            { name: "Vegetable Stir Fry", ingredients: ["Mixed Vegetables", "Soy Sauce", "Garlic", "Ginger", "Sesame Oil"], nutrients: { calories: 200, protein: 10, fat: 8, carbs: 25 } },
+            { name: "Quesadillas", ingredients: ["Tortillas", "Chicken", "Cheese", "Salsa", "Sour Cream"], nutrients: { calories: 350, protein: 20, fat: 18, carbs: 30 } }
+        ]
+    };
+
+    // Function to dynamically generate cards for recipes in a specific category
+    function generateCategoryCards(category, containerId) {
+      const container = document.getElementById(containerId);
+
+      // Clear existing content
+      container.innerHTML = "";
+
+      // Generate cards for each recipe in the category
+      recipeData[category].forEach(recipe => {
+        const card = document.createElement("div");
+        card.classList.add("card", "recipe-card");
+        card.innerHTML = `
+          <div class="card-info">
+            <h3>${recipe.name}</h3>
+            <div class="item-details">
+              <h4>Ingredients:</h4>
+              <ul>
+                ${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="nutrient-info">
+              <span>Calories: ${recipe.nutrients.calories}</span>
+              <span>Protein: ${recipe.nutrients.protein}g</span>
+              <span>Fat: ${recipe.nutrients.fat}g</span>
+              <span>Carbs: ${recipe.nutrients.carbs}g</span>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Call the function to generate cards for each category when the page loads
+    window.onload = function() {
+      generateCategoryCards('dinner', 'dinnerRecipes');
+      generateCategoryCards('lunch', 'lunchRecipes');
+      generateCategoryCards('breakfast', 'breakfastRecipes');
+      generateCategoryCards('quick', 'quickRecipes');
+    };
+</script>
+
+</body>
+</html>

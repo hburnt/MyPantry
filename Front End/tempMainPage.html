@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>myPantry</title>
+<link rel="stylesheet" href="style.css">
+<script src="logoutScript.js"></script> <!-- Assuming you have a script for logout functionality -->
+</head>
+<body>
+  <nav>
+    <div class="logo">myPantry</div>
+    <div class="top-bar">
+      <span class="welcome-text">Welcome, [Username]</span> <!-- Replace [Username] with the actual username -->
+      <!-- Modified sign-out button -->
+      <a href="landingPage.html" onclick="signOut()" class="small-button">Sign Out</a> <!-- Link to the landing page -->
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </nav>
+  <div class="spacer"></div> <!-- Add a spacer div -->
+  <div class="button-row">
+    <button onclick="redirectToPage('pantryPage.html')">Pantry</button>
+    <button onclick="redirectToPage('recipePage.html')">Recipe</button>
+    <button onclick="redirectToPage('shoppingListPage.html')">Shopping List</button>
+    <button onclick="redirectToPage('cookNowPage.html')">Cook Now</button>
+  </div>
+  <script src="sliderScript.js"></script> <!-- Assuming you have a script for logout functionality -->
+</body>
+</html>

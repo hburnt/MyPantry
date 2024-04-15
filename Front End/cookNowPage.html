@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>myPantry</title>
+<link rel="stylesheet" href="style.css">
+<script src="logoutScript.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="logo">myPantry</div>
+    <div class="top-bar">
+      <span class="welcome-text">Welcome, [Username]</span> <!-- Replace [Username] with the actual username -->
+      <!-- Modified sign-out button -->
+      <a href="landingPage.html" onclick="signOut()" class="small-button">Sign Out</a> <!-- Link to the landing page -->
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </nav>
+  <div class="spacer"></div> 
+  <div class="button-row">
+    <button onclick="redirectToPage('pantryPage.html')">Pantry</button>
+    <button onclick="redirectToPage('recipePage.html')">Recipe</button>
+    <button onclick="redirectToPage('shoppingListPage.html')">Shopping List</button>
+    <button onclick="redirectToPage('cookNowPage.html')">Cook Now</button>
+  </div>
+  <div class="recipe-instructions">
+    <h2>Spaghetti Carbonara</h2>
+    <h3>Cooking Time: 20 minutes</h3>
+    <ul>
+      <li>Boil water in a large pot and add salt.</li>
+      <li>Cook spaghetti according to package instructions until al dente.</li>
+      <li>In a separate bowl, mix eggs, grated Parmesan cheese, and black pepper.</li>
+      <li>In a skillet, cook chopped bacon until crispy.</li>
+      <li>Drain cooked spaghetti and add it to the skillet with the bacon.</li>
+      <li>Turn off the heat and quickly stir in the egg mixture, allowing the residual heat to cook the eggs without scrambling.</li>
+      <li>Serve hot, garnished with additional Parmesan cheese and chopped parsley if desired.</li>
+    </ul>
+  </div>
+  <script src="sliderScript.js"></script> 
+</body>
+</html>
