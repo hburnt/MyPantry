@@ -28,9 +28,9 @@
     <button onclick="redirectToPage('cookNowPage.html')">Cook Now</button>
   </div>
 
-  <!-- Pantry items -->
-  <div class="pantry-container">
-    <h2>Pantry Items</h2>
+  <!-- Shoping List items -->
+  <div class="shoppingList-container">
+    <h2>Shopping List Items</h2>
     
     <!-- Category: Vegetables -->
     <h3>Vegetables</h3>
@@ -74,7 +74,7 @@
   <script src="sliderScript.js"></script>
   <script>
     // Sample pantry items categorized
-        const pantryItems = {
+        const shoppingListItems = {
         vegetables: [
             { name: "Tomatoes", quantity: 3, expiration: "2024-05-01", nutrients: { calories: 20, protein: 1, fat: 0.5, carbs: 5 } },
             { name: "Bell Peppers", quantity: 2, expiration: "2024-04-20", nutrients: { calories: 30, protein: 1.5, fat: 0.7, carbs: 7 } },
@@ -136,7 +136,7 @@
       container.innerHTML = "";
 
       // Generate cards for each pantry item in the category
-      pantryItems[category].forEach(item => {
+      shoppingListItems[category].forEach(item => {
         const card = document.createElement("div");
         card.classList.add("card", "product-card");
         card.innerHTML = `
