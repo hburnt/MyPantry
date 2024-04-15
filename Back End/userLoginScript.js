@@ -22,11 +22,11 @@ function authenticateUser(username, password) {
     }
 }
 
-// Adding some sample users for demonstration
 addUser('user1', 'password1', 'uid1');
 addUser('user2', 'password2', 'uid2');
 
-// Adding sample user data for demonstration
+// Adding some sample users for demonstration
+
 updatePantryItems('uid1', {
         vegetables: [
             { name: "Tomatoes", quantity: 3, expiration: "2024-05-01", nutrients: { calories: 20, protein: 1, fat: 0.5, carbs: 5 } },
@@ -154,7 +154,6 @@ updateShoppingListItems('uid1', {
         ]
 });
 
-// Adding sample user data for demonstration
 updatePantryItems('uid2', {
     vegetables: [
         { name: "Tomatoes", quantity: 3, expiration: "2024-05-01", nutrients: { calories: 20, protein: 1, fat: 0.5, carbs: 5 } },
