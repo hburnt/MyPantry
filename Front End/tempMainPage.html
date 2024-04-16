@@ -5,28 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>myPantry</title>
 <link rel="stylesheet" href="style.css">
-<script src="logoutScript.js"></script> <!-- Assuming you have a script for logout functionality -->
+<script src="logoutScript.js"></script>
 </head>
 <body>
   <nav>
     <div class="logo">myPantry</div>
     <div class="top-bar">
-      <span class="welcome-text">Welcome, [Username]</span> <!-- Replace [Username] with the actual username -->
-      <!-- Modified sign-out button -->
-      <a href="landingPage.html" onclick="signOut()" class="small-button">Sign Out</a> <!-- Link to the landing page -->
+      <span id="welcomeText" class="welcome-text">Welcome, [Username]</span>
+      <a href="landingPage.html" onclick="signOut()" class="small-button">Sign Out</a>
       <label class="switch">
         <input type="checkbox" id="darkModeToggle">
         <span class="slider"></span>
       </label>
     </div>
   </nav>
-  <div class="spacer"></div> <!-- Add a spacer div -->
+  <div class="spacer"></div>
   <div class="button-row">
     <button onclick="redirectToPage('pantryPage.html')">Pantry</button>
     <button onclick="redirectToPage('recipePage.html')">Recipe</button>
     <button onclick="redirectToPage('shoppingListPage.html')">Shopping List</button>
     <button onclick="redirectToPage('cookNowPage.html')">Cook Now</button>
   </div>
-  <script src="sliderScript.js"></script> <!-- Assuming you have a script for logout functionality -->
+  <script src="sliderScript.js"></script>
+  <script>
+    // Function to fetch and set the logged-in user's username
+    function setLoggedInUsername() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const uid = urlParams.get('uid');
+      
+      // Assuming you have a function to fetch the user's data based on UID
+      getUserData(uid)
+        .then(userData => {
+          const welcomeText = document.getElementById('welcomeText');
+          welcomeText.textContent = `Welcome, ${userData.username}`;
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+        });
+    }
+
+    // Call the function when the page loads
+    window.addEventListener('load', setLoggedInUsername);
+  </script>
 </body>
 </html>

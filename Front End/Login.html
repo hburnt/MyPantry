@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login Form</title>
-<link rel="stylesheet" href="loginStyle.css"> <!-- Corrected placement of the link tag -->
+<link rel="stylesheet" href="loginStyle.css"> 
 </head>
 <body>
     
@@ -27,9 +27,17 @@
   </div>
 </div>
 
+<!-- Import userLoginData.js -->
+<script src="../Back%20End/userLoginData.js"></script>
+<!-- Main script -->
 <script>
-  // Function to handle form submission
-  function handleSubmit(event) {
+window.onload = function() {
+  // Autofocus on the username input field
+  document.querySelector('input[name="uname"]').focus();
+};
+
+// Function to handle form submission
+async function handleSubmit(event) {
     event.preventDefault(); // Prevent default form submission
 
     // Get form data
@@ -37,19 +45,37 @@
     const username = formData.get('uname');
     const password = formData.get('psw');
 
-    // Check if username and password are correct
-    if (username === 'Test' && password === 'Test') {
-      // If correct, redirect to mainPage.html
-      window.location.href = 'tempMainPage.html';
-    } else {
-      // If incorrect, show error message
-      alert('Invalid username or password. Please try again.');
+    try {
+        // Check if username and password are correct
+        const result = await searchUser(username, password);
+        if (result.found) {
+            const { uid } = result;
+            // If correct, redirect to mainPage.html with UID as a query parameter
+            window.location.href = `tempMainPage.html?uid=${uid}`;
+        } else {
+            // If incorrect, show error message
+            alert('Invalid username or password. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error searching for user:', error);
+        // Handle error, such as displaying an error message
     }
-  }
+}
 
-  // Add event listener to the form for submit event
-  const loginForm = document.getElementById('loginForm');
-  loginForm.addEventListener('submit', handleSubmit);
+// Add event listener to the form for submit event
+const loginForm = document.getElementById('loginForm');
+loginForm.addEventListener('submit', handleSubmit);
+
+// Prevent double submission
+let formSubmitted = false;
+loginForm.addEventListener('submit', function() {
+    if (formSubmitted) {
+        // If form has already been submitted, disable the submit button
+        document.getElementById('loginButton').setAttribute('disabled', 'disabled');
+    } else {
+        formSubmitted = true;
+    }
+});
 </script>
 
 </body>
