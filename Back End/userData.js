@@ -1,8 +1,10 @@
 class User {
-    constructor(uid, username) {
+    constructor(uid, username, firstName, lastName) {
         this.uid = uid;
         this.username = username;
-        this.pantryItems = [];
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pantryItems = {};
         this.recipes = {};
         this.listItems = {};
     }
@@ -42,12 +44,14 @@ class User {
     }
 
     // Method to fetch list items
-    fetchListItems() {
+    fetchShoppingListItems() {
         return this.listItems;
     }
 }
 
-const user = new User('101000', 'test')
+const user = new User('101000', 'test', "testUser", "firstTestUser");
+
+// Your add methods for pantry items, recipes, and shopping list items go here
 
 user.addPantryItems('vegetables',
 [
@@ -149,7 +153,7 @@ user.addShoppingListItems('vegetables',
 ]);
 
 user.addShoppingListItems('grains',
-        [
+[
             { name: "Pasta", quantity: 2, expiration: "2024-04-20", nutrients: { calories: 40, protein: 2, fat: 0.8, carbs: 10 } },
             { name: "Rice", quantity: 1, expiration: "2024-04-25", nutrients: { calories: 50, protein: 2.5, fat: 1, carbs: 12 } },
             // Additional grains for various meals

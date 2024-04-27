@@ -1,14 +1,3 @@
-// Function to simulate user creation
-async function createUser(username, password) {
-  // Simulate user creation with a delay
-  return new Promise((resolve, reject) => {
-      setTimeout(() => {
-          // Return a mock user object
-          resolve({ username, password });
-      }, 1000); // Simulate a 1-second delay
-  });
-}
-
 // Function to simulate user search
 async function searchUser(username, password) {
   // Simulate user search with a delay
