@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>myPantry - Pantry</title>
-<link rel="stylesheet" href="Styles/style.css">
-<script src="scripts/logoutScript.js"></script>
-<script src="scripts/JSONtest.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>myPantry - Shopping List</title>
+  <link rel="stylesheet" href="Styles/style.css">
+  <script src="scripts/logoutScript.js"></script>
 </head>
 <body>
   <nav>
@@ -27,7 +26,10 @@
     <button onclick="redirectToPage('shoppingListPage.html')">Shopping List</button>
     <button onclick="redirectToPage('cookNowPage.html')">Cook Now</button>
   </div>
-  <div id="ingredientContainer"></div> <!-- Container for recipe card -->
+
+  <h2>Pantry Page</h2>
+  <div id="ingredientContainer" class="recipe-card"></div>
+
   <script src="scripts/sliderScript.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -39,27 +41,52 @@
           {
             name: ingredientData.name,
             nutrition: ingredientData.nutrition.nutrients,
-            unit: "oz"
+            unit: "oz",
+            aisle: ingredientData.aisle
           }
         ];
-        const recipeCard = document.getElementById('ingredientContainer');
-        recipeCard.innerHTML = `
-          <h2>${title}</h2>
-          <h3>Ingredients:</h3>
-          <ul>
-            ${ingredients.map((ingredient, index) => `
-              <li>
-                <strong>${ingredient.name}</strong><br>
-                <strong>Nutrition Information:</strong><br>
-                ${ingredient.nutrition.map(nutrient => `
-                  - ${nutrient.name}: ${nutrient.amount} ${nutrient.unit}<br>
-                `).join('')}
-                <strong>Unit:</strong> ${ingredient.unit}
-              </li>
-            `).join('')}
-          </ul>
-        `;
-      })
+
+        const aisleArray = [];
+        const ingredientContainer = document.getElementById('ingredientContainer');
+
+        // Create product cards grouped by aisle
+        ingredients.forEach(ingredient => {
+          // Add aisle to the array
+          aisleArray.push(ingredient.aisle);
+        });
+
+        // Remove duplicates and sort categories
+        const uniqueCategories = [...new Set(aisleArray)].sort();
+
+        // Display categories and ingredients
+        uniqueCategories.forEach(category => {
+          const categoryHeader = document.createElement('h3');
+          categoryHeader.textContent = category;
+          ingredientContainer.appendChild(categoryHeader);
+
+          // Filter ingredients by category
+          const ingredientsInCategory = ingredients.filter(ingredient => ingredient.aisle === category);
+
+          // Create product cards for ingredients in the category
+          ingredientsInCategory.forEach(ingredient => {
+            const card = document.createElement('div');
+            card.classList.add('product-card');
+            card.innerHTML = `
+              <h1>${ingredient.name}</h1>
+              <div class="item-details">
+                <p><strong>Nutrition Information:</strong></p>
+                <ul class="nutrient-info">
+                  ${ingredient.nutrition.map(nutrient => `
+                    <li>${nutrient.name}: ${nutrient.amount} ${nutrient.unit}</li>
+                  `).join('')}
+                </ul>
+                <p><strong>Unit:</strong> ${ingredient.unit}</p>
+              </div>
+            `;
+            ingredientContainer.appendChild(card);
+          });
+        });
+      });
     });
   </script>
 </body>

@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>myPantry - Shopping List</title>
-<link rel="stylesheet" href="Styles/style.css">
-<script src="scripts/logoutScript.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>myPantry - Shopping List</title>
+  <link rel="stylesheet" href="Styles/style.css">
+  <script src="scripts/logoutScript.js"></script>
 </head>
 <body>
   <nav>
     <div class="logo">myPantry</div>
     <div class="top-bar">
-      <span class="welcome-text">Welcome, [Username]</span> 
-      <!-- Modified sign-out button -->
-      <a href="landingPage.html" onclick="signOut()" class="small-button">Sign Out</a> 
+      <span class="welcome-text">Welcome, [Username]</span>
+      <a href="landingPage.html" onclick="signOut()" class="small-button">Sign Out</a>
       <label class="switch">
         <input type="checkbox" id="darkModeToggle">
         <span class="slider"></span>
       </label>
     </div>
   </nav>
-  <div class="spacer"></div> <!-- Add a spacer div -->
+  <div class="spacer"></div>
   <div class="button-row">
     <button onclick="redirectToPage('pantryPage.html')">Pantry</button>
     <button onclick="redirectToPage('recipePage.html')">Recipe</button>
@@ -28,93 +27,26 @@
     <button onclick="redirectToPage('cookNowPage.html')">Cook Now</button>
   </div>
 
-  <!-- Shopping List items -->
-  <div class="shoppingList-container">
-    <h2>Shopping List Items</h2>
-    
-    <!-- Category: Vegetables -->
-    <h3>Vegetables</h3>
-    <div class="card-list" id="vegetablesItems">
-      <!-- Cards for vegetables will be dynamically generated here -->
-    </div>
+  <h2>Shopping List Items</h2>
+  <div id="shoppingListContainer" class="recipe-card"></div>
 
-    <!-- Category: Grains -->
-    <h3>Grains</h3>
-    <div class="card-list" id="grainsItems">
-      <!-- Cards for grains will be dynamically generated here -->
-    </div>
-
-    <h3>Proteins</h3> <!-- Corrected spelling -->
-    <div class="card-list" id="proteinsItems">
-      <!-- Cards for proteins will be dynamically generated here -->
-    </div>
-
-    <h3>Cheese</h3>
-    <div class="card-list" id="cheeseItems">
-      <!-- Cards for cheese will be dynamically generated here -->
-    </div>
-
-    <h3>Dairy</h3>
-    <div class="card-list" id="dairyItems">
-      <!-- Cards for dairy will be dynamically generated here -->
-    </div>
-
-    <h3>Sauces</h3>
-    <div class="card-list" id="saucesItems">
-      <!-- Cards for sauces will be dynamically generated here -->
-    </div>
-
-    <h3>Misc</h3>
-    <div class="card-list" id="miscItems">
-      <!-- Cards for misc will be dynamically generated here -->
-    </div>
-
-  </div>
-
-  <script src="scripts/sliderScript.js"></script>
-  <script src="scripts/JSONtest.js"></script>
   <script>
-    // Function to dynamically generate cards for shopping list items in a specific category
-    function generateCategoryCards(category, containerId) {
-      const container = document.getElementById(containerId);
+    fetch('./spoonRecipe.json')
+      .then(response => response.json())
+      .then(recipeData => {
+        // Read the contents of the JSON file
+        const ingredients = recipeData.extendedIngredients;
 
-      // Clear existing content
-      container.innerHTML = "";
-
-      // Generate cards for each shopping list item in the category
-      shoppingListItems[category].forEach(item => {
-        const card = document.createElement("div");
-        card.classList.add("card", "product-card");
-        card.innerHTML = `
-          <div class="card-icon">${item.name.charAt(0)}</div>
-          <div class="card-info">
-            <h3>${item.name}</h3>
-            <div class="item-details">
-              <span>Quantity: ${item.quantity}</span>
-            </div>
-            <div class="nutrient-info">
-              <span>Calories: ${item.nutrients.calories}</span>
-              <span>Protein: ${item.nutrients.protein}g</span>
-              <span>Fat: ${item.nutrients.fat}g</span>
-              <span>Carbs: ${item.nutrients.carbs}g</span>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    // Call the function to generate cards for each category when the page loads
-    window.onload = function() {
-      generateCategoryCards('vegetables', 'vegetablesItems');
-      generateCategoryCards('grains', 'grainsItems');
-      generateCategoryCards('proteins', 'proteinsItems');
-      generateCategoryCards('cheese', 'cheeseItems');
-      generateCategoryCards('dairy', 'dairyItems');
-      generateCategoryCards('sauces', 'saucesItems');
-      generateCategoryCards('misc', 'miscItems');
-    };
+        // Create recipe card elements
+        const recipeCard = document.getElementById('shoppingListContainer'); // Changed selector to ID
+        recipeCard.innerHTML = `
+          <ul>
+            ${ingredients.map((ingredient, index) => `
+              <li>${index + 1}. ${ingredient.name}, ${ingredient.amount} ${ingredient.measures.metric.unitLong} (Aisle: ${ingredient.aisle})</li>
+            `).join('')}
+          </ul>`;
+      })
+      .catch(error => console.error('Error fetching data:', error));
   </script>
-
 </body>
 </html>
