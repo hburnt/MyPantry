@@ -27,11 +27,24 @@
     <button onclick="redirectToPage('cookNowPage.html')">Cook Now</button>
   </div>
 
+<!-- Add a search bar -->
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Search for Pantry Items...">
+  <button onclick="search()">Search</button>
+</div>
+
   <h2>Pantry Page</h2>
   <div id="ingredientContainer" class="recipe-card"></div>
 
   <script src="scripts/sliderScript.js"></script>
   <script>
+  
+  function search() {
+    // Get the value entered in the search input
+    var searchText = document.getElementById("searchInput").value;
+    console.log("Search string: " + searchText);
+  }
+
     document.addEventListener("DOMContentLoaded", function() {
       fetch('./spoonIngredientInfo.json')
       .then(response => response.json())
