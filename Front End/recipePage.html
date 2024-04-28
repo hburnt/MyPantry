@@ -27,76 +27,55 @@
     <button onclick="redirectToPage('shoppingListPage.html')">Shopping List</button>
     <button onclick="redirectToPage('cookNowPage.html')">Cook Now</button>
   </div>
-
-  <!-- Recipe items -->
-  <div class="recipe-container">
-    <h2>Recipes</h2>
-    
-    <!-- Category: Dinner -->
-    <h3>Dinner</h3>
-    <div class="card-list" id="dinnerRecipes">
-      <!-- Cards for dinner recipes will be dynamically generated here -->
-    </div>
-
-    <!-- Category: Lunch -->
-    <h3>Lunch</h3>
-    <div class="card-list" id="lunchRecipes">
-      <!-- Cards for lunch recipes will be dynamically generated here -->
-    </div>
-
-    <h3>Breakfast</h3>
-    <div class="card-list" id="breakfastRecipes">
-      <!-- Cards for breakfast recipes will be dynamically generated here -->
-    </div>
-
-    <h3>Quick</h3>
-    <div class="card-list" id="quickRecipes">
-      <!-- Cards for quick recipes will be dynamically generated here -->
-    </div>
-  </div>
+  
+  <h2>Recipe Items</h2>
+  <h2>lunch</h2>
+  <div id="recipesContainer" class="recipe-card"></div> <!-- Added class for recipe card -->
 
   <script src="scripts/sliderScript.js"></script> <!-- Updated script path -->
-  <script src="scripts/JSONtest.js"></script> <!-- Updated script path -->
+  
   <script>
-    // Function to dynamically generate cards for recipes in a specific category
-    function generateCategoryCards(category, containerId) {
-      const container = document.getElementById(containerId);
+// Fetch JSON data from spoonRecipe.json
+fetch('./spoonRecipe.json')
+  .then(response => response.json())
+  .then(recipeData => {
+    // Read the contents of the JSON file
+    const title = recipeData.title;
+    const ingredients = recipeData.extendedIngredients;
+    const summary = recipeData.summary;
+    const cookTime = recipeData.readyInMinutes;
+    const firstDishType = recipeData.dishTypes[0]; // Get the first dish type
 
-      // Clear existing content
-      container.innerHTML = "";
-      // Generate cards for each recipe in the category
-      recipeData[category].forEach(recipe => {
-        const card = document.createElement("div");
-        card.classList.add("card", "recipe-card");
-        card.innerHTML = `
-          <div class="card-info">
-            <h3>${recipe.name}</h3>
-            <div class="item-details">
-              <h4>Ingredients:</h4>
-              <ul>
-                ${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
-              </ul>
-            </div>
-            <div class="nutrient-info">
-              <span>Calories: ${recipe.nutrients.calories}</span>
-              <span>Protein: ${recipe.nutrients.protein}g</span>
-              <span>Fat: ${recipe.nutrients.fat}g</span>
-              <span>Carbs: ${recipe.nutrients.carbs}g</span>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
+    // Create recipe card elements
+    const recipeCard = document.getElementById('recipesContainer'); // Changed selector to ID
+    recipeCard.innerHTML = `
+      <h2>${title}</h2>
+      <h3>Dish Type:</h3> <!-- Changed heading to singular -->
+      <p>${firstDishType}</p> <!-- Display only the first dish type -->
+      <h3>Ingredients:</h3>
+      <ul>
+        ${ingredients.map((ingredient, index) => `
+          <li>${index + 1}. ${ingredient.name}, ${ingredient.amount} ${ingredient.measures.metric.unitLong}</li>
+        `).join('')}
+      </ul>
+      <div class="summary">
+        <p><strong>Summary:</strong> ${summary}</p>
+      </div>
+      <div class="footer">
+        <p>Cook Time: ${cookTime} minutes</p>
+        <button class="cook-now-button">Cook Now</button>
+      </div>
+    `;
 
-    // Call the function to generate cards for each category when the page loads
-    window.onload = function() {
-      generateCategoryCards('dinner', 'dinnerRecipes');
-      generateCategoryCards('lunch', 'lunchRecipes');
-      generateCategoryCards('breakfast', 'breakfastRecipes');
-      generateCategoryCards('quick', 'quickRecipes');
-    };
-</script>
+    // Add event listener to the "Cook Now" button
+    const cookNowButton = recipeCard.querySelector('.cook-now-button');
+    cookNowButton.addEventListener('click', () => {
+      window.location.href = 'cookNowPage.html'; // Redirect to cookNow.html
+    });
+  })
+  .catch(error => console.error('Error fetching data:', error));
+
+    </script>
 
 </body>
 </html>

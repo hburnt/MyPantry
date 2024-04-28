@@ -269,6 +269,43 @@ h3 {
     margin-bottom: 3em; /* Increase the space between category titles */
 }
 
+.recipe-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px;
+  width: 400px;
+  position: relative; /* Needed for absolute positioning of summary */
+}
+.recipe-card h2 {
+  margin-top: 0;
+}
+.recipe-card ul {
+  list-style-type: none;
+  padding: 0;
+}
+.recipe-card ul li {
+  margin-bottom: 10px;
+}
+.recipe-card .summary {
+  display: none; /* Hide the summary by default */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff; /* Change the background color as needed */
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.recipe-card:hover .summary {
+  display: block; /* Show the summary when hovering */
+}
+
+.recipe-info h1,
+.recipe-info p,
+.recipe-info h2 {
+  margin-bottom: 10px; /* Add spacing between headers and their associated data */
+}
+
 
 @media screen and (max-width: 576px) {
   .product-card {
