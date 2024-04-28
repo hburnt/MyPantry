@@ -1,0 +1,8 @@
+{
+    "spoonacular_api_key": "8b5d9ffd5d12429fa3c0edf4c192f9c7",
+    "mysql_host": "172.17.0.2",
+    "mysql_port": "3306",
+    "mysql_database": "MyPantryDB",
+    "mysql_user": "root",
+    "mysql_password": "CloudNative"
+}
