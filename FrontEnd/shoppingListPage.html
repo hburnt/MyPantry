@@ -31,6 +31,33 @@
   <div id="shoppingListContainer" class="recipe-card"></div>
 
   <script>
+
+    fetch('./spoonRecipe.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(recipeData => {
+        // Read the contents of the JSON file
+        const ingredients = recipeData.extendedIngredients;
+
+        // Create recipe card elements
+        const recipeCard = document.getElementById('shoppingListContainer'); // Changed selector to ID
+        recipeCard.innerHTML = `
+          <ul>
+            ${ingredients.map((ingredient, index) => `
+              <li>${index + 1}. ${ingredient.name}, ${ingredient.amount} ${ingredient.measures.metric.unitLong} (Aisle: ${ingredient.aisle})</li>
+            `).join('')}
+          </ul>`;
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        const recipeCard = document.getElementById('shoppingListContainer');
+        recipeCard.innerHTML = `<p>Error fetching data. Please try again later.</p>`;
+      });
+
   </script>
 </body>
 </html>

@@ -39,14 +39,72 @@
   <script src="scripts/sliderScript.js"></script>
   <script>
   
-  function search() {
-    // Get the value entered in the search input
-    var searchText = document.getElementById("searchInput").value;
-    console.log("Search string: " + searchText);
+  fetch('/recipes')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(recipeData => {
+    const recipeContainer = document.getElementById('recipeContainer'); // Corrected id
 
-    return searchText;
-  };
+    // Check if recipeData is empty or contains no recipes
+    if (recipeData.length === 0) {
+      // Display a message indicating no data is available
+      recipeContainer.innerHTML = `<p>No recipes found.</p>`;
+    } else {
+      // Clear previous content
+      recipeContainer.innerHTML = '';
 
+      // Iterate over each recipe
+      recipeData.forEach(recipe => {
+        // Read the contents of each recipe
+        const title = recipe.title;
+        const ingredients = recipe.extendedIngredients;
+        const summary = recipe.summary;
+        const cookTime = recipe.readyInMinutes;
+        const firstDishType = recipe.dishTypes[0]; // Get the first dish type
+
+        // Create recipe card elements
+        const recipeCard = document.createElement('div');
+        recipeCard.classList.add('recipe-card');
+
+        recipeCard.innerHTML = `
+          <h2>${title}</h2>
+          <h3>Dish Type:</h3>
+          <p>${firstDishType}</p>
+          <h3>Ingredients:</h3>
+          <ul>
+            ${ingredients.map((ingredient, index) => `
+              <li>${index + 1}. ${ingredient.name}, ${ingredient.amount} ${ingredient.measures.metric.unitLong}</li>
+            `).join('')}
+          </ul>
+          <div class="summary">
+            <p><strong>Summary:</strong> ${summary}</p>
+          </div>
+          <div class="footer">
+            <p>Cook Time: ${cookTime} minutes</p>
+            <button class="cook-now-button">Cook Now</button>
+          </div>
+        `;
+
+        // Add event listener to the "Cook Now" button
+        const cookNowButton = recipeCard.querySelector('.cook-now-button');
+        cookNowButton.addEventListener('click', () => {
+          window.location.href = 'cookNowPage.html'; // Redirect to cookNow.html
+        });
+
+        // Append the recipe card to the container
+        recipeContainer.appendChild(recipeCard);
+      });
+    }
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+    const recipeContainer = document.getElementById('recipeContainer');
+    recipeContainer.innerHTML = `<p>Error fetching data. Please try again later.</p>`;
+  });
   
   </script>
 </body>
