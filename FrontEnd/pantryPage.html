@@ -43,9 +43,8 @@
     // Get the value entered in the search input
     var searchText = document.getElementById("searchInput").value;
     console.log("Search string: " + searchText);
-    return searchText;
   }
-  
+
     document.addEventListener("DOMContentLoaded", function() {
       fetch('./spoonIngredientInfo.json')
       .then(response => response.json())
