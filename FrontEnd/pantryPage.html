@@ -43,64 +43,11 @@
     // Get the value entered in the search input
     var searchText = document.getElementById("searchInput").value;
     console.log("Search string: " + searchText);
-  }
 
-    document.addEventListener("DOMContentLoaded", function() {
-      fetch('./spoonIngredientInfo.json')
-      .then(response => response.json())
-      .then(ingredientData => {
-        const title = ingredientData.name;
-        const ingredients = [
-          {
-            name: ingredientData.name,
-            nutrition: ingredientData.nutrition.nutrients,
-            unit: "oz",
-            aisle: ingredientData.aisle
-          }
-        ];
+    return searchText;
+  };
 
-        const aisleArray = [];
-        const ingredientContainer = document.getElementById('ingredientContainer');
-
-        // Create product cards grouped by aisle
-        ingredients.forEach(ingredient => {
-          // Add aisle to the array
-          aisleArray.push(ingredient.aisle);
-        });
-
-        // Remove duplicates and sort categories
-        const uniqueCategories = [...new Set(aisleArray)].sort();
-
-        // Display categories and ingredients
-        uniqueCategories.forEach(category => {
-          const categoryHeader = document.createElement('h3');
-          categoryHeader.textContent = category;
-          ingredientContainer.appendChild(categoryHeader);
-
-          // Filter ingredients by category
-          const ingredientsInCategory = ingredients.filter(ingredient => ingredient.aisle === category);
-
-          // Create product cards for ingredients in the category
-          ingredientsInCategory.forEach(ingredient => {
-            const card = document.createElement('div');
-            card.classList.add('product-card');
-            card.innerHTML = `
-              <h1>${ingredient.name}</h1>
-              <div class="item-details">
-                <p><strong>Nutrition Information:</strong></p>
-                <ul class="nutrient-info">
-                  ${ingredient.nutrition.map(nutrient => `
-                    <li>${nutrient.name}: ${nutrient.amount} ${nutrient.unit}</li>
-                  `).join('')}
-                </ul>
-                <p><strong>Unit:</strong> ${ingredient.unit}</p>
-              </div>
-            `;
-            ingredientContainer.appendChild(card);
-          });
-        });
-      });
-    });
+  
   </script>
 </body>
 </html>
