@@ -39,12 +39,14 @@ type Recipe struct {
 type RecipeInfo struct {
 	ID          int
 	Title       string
+  URL         string
 	Ingredients []Ingredient
 }
 
 type SpoonRecipeResponse struct {
 	ID          int          `json:"id"`
 	Title       string       `json:"title"`
+  URL         string       `json:"sourceURL"`
 	Ingredients []Ingredient `json:"extendedIngredients"`
 }
 
@@ -120,6 +122,7 @@ func parseRecipeInfoResponse(data []byte) (RecipeInfo, error) {
 	info := RecipeInfo{
 		ID:          resp.ID,
 		Title:       resp.Title,
+    URL:         resp.URL,
 		Ingredients: ingredients,
 	}
 	return info, nil
